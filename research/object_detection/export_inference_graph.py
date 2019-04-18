@@ -93,6 +93,8 @@ python export_inference_graph \
 """
 import tensorflow as tf
 from google.protobuf import text_format
+import sys
+sys.path.append("..")
 from object_detection import exporter
 from object_detection.protos import pipeline_pb2
 
