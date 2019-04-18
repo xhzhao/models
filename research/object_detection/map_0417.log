@@ -1,0 +1,75 @@
+Evaluation executable for detection models.
+
+This executable is used to evaluate DetectionModels. There are two ways of
+configuring the eval job.
+
+1) A single pipeline_pb2.TrainEvalPipelineConfig file maybe specified instead.
+In this mode, the --eval_training_data flag may be given to force the pipeline
+to evaluate on training data instead.
+
+Example usage:
+    ./eval \
+        --logtostderr \
+        --checkpoint_dir=path/to/checkpoint_dir \
+        --eval_dir=path/to/eval_dir \
+        --pipeline_config_path=pipeline_config.pbtxt
+
+2) Three configuration files may be provided: a model_pb2.DetectionModel
+configuration file to define what type of DetectionModel is being evaluated, an
+input_reader_pb2.InputReader file to specify what data the model is evaluating
+and an eval_pb2.EvalConfig file to configure evaluation parameters.
+
+Example usage:
+    ./eval \
+        --logtostderr \
+        --checkpoint_dir=path/to/checkpoint_dir \
+        --eval_dir=path/to/eval_dir \
+        --eval_config_path=eval_config.pbtxt \
+        --model_config_path=model_config.pbtxt \
+        --input_config_path=eval_input_config.pbtxt
+
+flags:
+
+legacy/eval.py:
+  --checkpoint_dir: Directory containing checkpoints to evaluate, typically set
+    to `train_dir` used in the training job.
+    (default: '')
+  --eval_config_path: Path to an eval_pb2.EvalConfig config file.
+    (default: '')
+  --eval_dir: Directory to write eval summaries to.
+    (default: '')
+  --[no]eval_training_data: If training data should be evaluated for this job.
+    (default: 'false')
+  --input_config_path: Path to an input_reader_pb2.InputReader config file.
+    (default: '')
+  --model_config_path: Path to a model_pb2.DetectionModel config file.
+    (default: '')
+  --pipeline_config_path: Path to a pipeline_pb2.TrainEvalPipelineConfig config
+    file. If provided, other configs are ignored
+    (default: '')
+  --[no]run_once: Option to only run a single pass of evaluation. Overrides the
+    `max_evals` parameter in the provided config.
+    (default: 'false')
+
+Try --helpfull to get a list of all flags.
+creating index...
+index created!
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=52.45s).
+Accumulating evaluation results...
+DONE (t=13.89s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.260
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.415
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.286
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.041
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.217
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.425
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.245
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.367
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.375
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.084
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.343
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.591
